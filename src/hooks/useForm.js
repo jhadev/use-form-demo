@@ -44,10 +44,9 @@ const useForm = initialState => {
         // placeholder to do something else.
         args = [...args];
         const [{ className }] = args
-        console.log(className)
         if (className) {
           args = args.map(dependency => {
-            dependency.className = args[0].className
+            dependency.className = className
             return dependency
           })
         }
