@@ -8,7 +8,7 @@ needs a ton of work, but it works.
 
 Input changes are handled automatically.
 
-Defaults to bootstrap form-control class names for inputs if no deps are specified. If no ids are specified it will auto gen and append a random string of characters to the key name in state and apply it as input field and label ids (if specified) to avoid duplicate ids. Labels are not shown by default. Simple validation can be handled by disabling a button for now.
+Defaults to bootstrap form-control class names for inputs if no deps are specified. If no ids are specified it will auto gen and append a random string of characters to the key name in state and apply it as the input field id and label htmlFor (if specified) to avoid duplicate ids. Labels are not shown by default. Simple validation can be handled by disabling a button for now.
 
 - _ex:_ **id="name-gnb1ee5r0"**
 
