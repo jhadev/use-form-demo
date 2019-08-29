@@ -6,11 +6,57 @@ needs a ton of work, but it works.
 
 ---
 
+In any functional component...
+
+```
+import React from 'react';
+import { useForm } from '../hooks/useForm';
+
+const SomeForm = props => {
+
+  const { formState, setFormState, onChange, mapInputs } = useForm({
+    // initialize state here
+  });
+
+  ...
+}
+
+export default SomeForm
+```
+
 Input changes are handled automatically.
 
 Defaults to bootstrap form-control class names for inputs if no deps are specified. If no ids are specified it will auto gen and append a random string of characters to the key name in state and apply it as the input field id and label htmlFor (if specified) to avoid duplicate ids. Labels are not shown by default. Simple validation can be handled by disabling a button for now.
 
 - _ex:_ **id="name-gnb1ee5r0"**
+
+- **setFormState behaves just like this.setState**
+
+```
+  ...
+
+  const { formState, setFormState, onChange, mapInputs } = useForm({
+    email: '',
+    password: '',
+    success: false,
+    error: null
+  });
+
+  ...
+
+  const signInUser = () => {
+    const { email, password } = formState
+
+    props.firebase.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        setFormState({ email: '', password: '', success: true })
+      }).catch(error => {
+        setFormState({ error, success: false })
+      })
+  }
+
+  ...
+```
 
 ### **Map all of state to inputs with no options**
 
