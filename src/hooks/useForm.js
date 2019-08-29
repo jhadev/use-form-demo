@@ -31,11 +31,11 @@ const useForm = initialState => {
   // create an array of arrays with key, value pairs.
   // return a closure that uses the state object to map inputs as JSX
   const mapInputs = (state, filter) => {
-    let stateArr = Object.entries(state);
+    let stateToMap = Object.entries(state);
     if (filter) {
       const filteredState = filter
         .reduce((obj, key) => ({ ...obj, [key]: state[key] }), {});
-      stateArr = Object.entries(filteredState)
+      stateToMap = Object.entries(filteredState)
     }
 
     return args => {
@@ -44,10 +44,10 @@ const useForm = initialState => {
         args = [...args];
       } else {
         args = [];
-        args.length = stateArr.length;
+        args.length = stateToMap.length;
         args = [...args].map(() => ({}));
       }
-      return stateArr.map(([key, value], index) => {
+      return stateToMap.map(([key, value], index) => {
         return (
           <React.Fragment key={index}>
             {args[index].label && (
