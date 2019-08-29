@@ -15,7 +15,7 @@ const FormOnlyOptions = props => {
       label: 'Enter your name.',
       placeholder: 'Your Name Here',
       type: 'text',
-      id: 'name-field'
+      id: 'name-field',
     },
     {},
     { label: 'How old are you?', type: 'number' }
