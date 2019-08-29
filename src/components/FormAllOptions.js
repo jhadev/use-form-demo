@@ -22,6 +22,7 @@ const FormAllOptions = props => {
   ];
 
   // options are label, id, className, placeholder, type
+  // mapInputs second argument is a filter to display inputs
   const displayInputs = mapInputs(formState, ['name', 'password'])(
     formOptions
   );

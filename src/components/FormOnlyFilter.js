@@ -10,6 +10,7 @@ const FormOnlyFilter = props => {
     error: null
   });
 
+  // mapInputs second argument is a filter to display inputs
   const displayInputs = mapInputs(formState, ['name', 'password'])();
 
   const postForm = () => {
