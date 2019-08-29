@@ -10,9 +10,8 @@ const FormOnlyFilter = props => {
     error: null
   });
 
-  const filterInputsToDisplay = ({ name, password }) => ({ name, password });
-
-  const displayInputs = mapInputs(filterInputsToDisplay(formState))();
+  // mapInputs second argument is a filter to display inputs
+  const displayInputs = mapInputs(formState, ['name', 'password'])();
 
   const postForm = () => {
     // simulate post to server or can update parent with prop function here.

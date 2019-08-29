@@ -9,11 +9,6 @@ const FormAllOptions = props => {
     success: false
   });
 
-  // if we don't want all of state to be made into input fields can do this.
-  // state is preserved and we can call setFormState on the non input items in state normally.
-  const filterInputsToDisplay = ({ name, password }) => ({ name, password });
-  // return the closure to map inputs to the items in state asked for above.
-
   // define form options here -- need to either leave out dependency array or add empty objects to go in order
 
   const formOptions = [
@@ -27,7 +22,8 @@ const FormAllOptions = props => {
   ];
 
   // options are label, id, className, placeholder, type
-  const displayInputs = mapInputs(filterInputsToDisplay(formState))(
+  // mapInputs second argument is a filter to display inputs
+  const displayInputs = mapInputs(formState, ['name', 'password'])(
     formOptions
   );
 
