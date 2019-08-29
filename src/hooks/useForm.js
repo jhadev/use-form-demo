@@ -5,15 +5,6 @@ const reducer = (currentState, newState) => {
   return { ...currentState, ...newState };
 };
 
-const genOnce = () => {
-  let done = false
-  if (!done) {
-    done = true
-    return Math.random()
-      .toString(36)
-      .substr(2, 8);
-  }
-}
 // call useForm with initialState object in any functional component
 const useForm = initialState => {
   // initialize useReducer and extract state object and setState function from it.
@@ -25,12 +16,27 @@ const useForm = initialState => {
     setFormState({ [name]: value });
   };
 
+  // ids always change for now.
+  const genId = () => {
+    const random = Math.random()
+      .toString(36)
+      .substr(2, 8);
+
+    return () => {
+      let done = false
+      if (!done) {
+        done = true
+        return random
+      }
+    }
+  }
   // if no ids are added they will be auto genned based on name in state and a random string of numbers.
-  const genId = genOnce()
   // takes in the formState object as an arg in the functional component
   // create an array of arrays with key, value pairs.
   // return a closure that uses the state object to map inputs as JSX
+
   const mapInputs = (state, filter) => {
+
     let stateToMap = Object.entries(state);
     // if there is an array of filter deps get them ready to map
     if (filter) {
@@ -43,10 +49,14 @@ const useForm = initialState => {
       if (args) {
         // placeholder to do something else.
         args = [...args];
+        // if there is a className defined in first dependency obj
+        // use it for every dep that doesn't have a className.
         const [{ className }] = args
         if (className) {
           args = args.map(dependency => {
-            dependency.className = className
+            if (!dependency.className) {
+              return { ...dependency, className: className }
+            }
             return dependency
           })
         }
@@ -55,17 +65,19 @@ const useForm = initialState => {
         args.length = stateToMap.length;
         args = [...args].map(() => ({}));
       }
+
       return stateToMap.map(([key, value], index) => {
+        const genned = genId()()
         return (
           <React.Fragment key={index}>
             {args[index].label && (
-              <label htmlFor={args[index].id || `${key}-${genId}${index}`}>
+              <label htmlFor={args[index].id || `${key}-${genned}${index}`}>
                 {args[index].label}
               </label>
             )}
             <input
               className={args[index].className || `form-control mb-3`}
-              id={args[index].id || `${key}-${genId}${index}`}
+              id={args[index].id || `${key}-${genned}${index}`}
               type={args[index].type || key}
               placeholder={
                 args[index].placeholder ||

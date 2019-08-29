@@ -6,6 +6,7 @@ const FormAllOptions = props => {
   const { formState, setFormState, onChange, mapInputs } = useForm({
     name: '',
     password: '',
+    age: '',
     success: false
   });
 
