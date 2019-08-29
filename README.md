@@ -42,7 +42,8 @@ Defaults to bootstrap form-control class names for inputs if no deps are specifi
     error: null
   });
 
-  // second optional argument of mapInputs is an array of state values as strings to filter
+  // second optional argument of mapInputs is an array of certain state values as strings to create into inputs
+
   const displayInputs = mapInputs(formState, ['name', 'password'])();
 
   ...
@@ -64,6 +65,7 @@ Defaults to bootstrap form-control class names for inputs if no deps are specifi
 
   // if an input does not need options, insert an empty object as the placeholder. The order matters.
   // options are label, id, className, placeholder, type
+
   const formOptions = [
     {
       label: 'Enter your name.',
@@ -75,9 +77,7 @@ Defaults to bootstrap form-control class names for inputs if no deps are specifi
     { label: 'How old are you?', type: 'number' }
   ];
 
-  const displayInputs = mapInputs(formState)(
-    formOptions
-  );
+  const displayInputs = mapInputs(formState)(formOptions);
 
   return (
     ...
@@ -96,23 +96,21 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
   });
 
   // order matters
+  // options are label, id, className, placeholder, type
 
   const formOptions = [
     {
-      label: 'test',
+      label: 'Enter your name.',
       placeholder: 'Do you even have a name?',
       type: 'text',
       className: 'form-control my-2'
     },
-    { id: 'testing', className: 'form-control my-2' }
+    { id: 'password-field', className: 'form-control my-2' }
   ];
 
-  // options are label, id, className, placeholder, type
   // mapInputs second argument is an array to filter the inputs you want to display.
 
-  const displayInputs = mapInputs(formState, ['name', 'password'])(
-    formOptions
-  );
+  const displayInputs = mapInputs(formState, ['name', 'password'])(formOptions);
 
   ...
   return (
