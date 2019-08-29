@@ -145,9 +145,9 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
   /*
     order matters
     options are label, id, className, placeholder, type
-    if className property exits for the first item,
-    it will be automatically added to the rest of the inputs
-    if classNames exists for any of the following objects,
+    if className property exists for the first item,
+    it will be automatically added to the rest of the inputs.
+    if classNames exist for any of the following objects,
     they will not be replaced.
   */
 
