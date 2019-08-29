@@ -1,6 +1,6 @@
 # React hook to gen forms.
 
-needs a ton of work, but it works.
+_in progress_
 
 ## **usage**
 
@@ -142,8 +142,14 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
     success: false
   });
 
-  // order matters
-  // options are label, id, className, placeholder, type
+  /*
+    order matters
+    options are label, id, className, placeholder, type
+    if className property exits for the first item,
+    it will be automatically added to the rest of the inputs
+    if classNames exists for any of the following objects,
+    they will not be replaced.
+  */
 
   const formOptions = [
     {
@@ -152,7 +158,7 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
       type: 'text',
       className: 'form-control my-2'
     },
-    { id: 'password-field', className: 'form-control my-2' }
+    { id: 'password-field' }
   ];
 
   // mapInputs second argument is an array to filter the inputs you want to display.
