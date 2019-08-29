@@ -32,6 +32,7 @@ const useForm = initialState => {
   // return a closure that uses the state object to map inputs as JSX
   const mapInputs = (state, filter) => {
     let stateToMap = Object.entries(state);
+    // if there is an array of filter deps get them ready to map
     if (filter) {
       const filteredState = filter
         .reduce((obj, key) => ({ ...obj, [key]: state[key] }), {});

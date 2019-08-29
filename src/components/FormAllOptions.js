@@ -29,7 +29,7 @@ const FormAllOptions = props => {
 
   /*
   if no options
-  const displayInputs = mapInputs(filterInputsToDisplay(formState))();
+  const displayInputs = mapInputs(formState, ['name', 'password'])();
 
   if no filter and no options
   const displayInput = mapInputs(formState)()
