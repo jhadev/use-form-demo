@@ -104,7 +104,7 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
       type: 'text',
       className: 'form-control my-2'
     },
-    { id: 'testing', className: ' form-control my-2' }
+    { id: 'testing', className: 'form-control my-2' }
   ];
 
   // options are label, id, className, placeholder, type
