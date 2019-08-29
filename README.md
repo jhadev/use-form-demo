@@ -108,7 +108,7 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
   ];
 
   // options are label, id, className, placeholder, type
-  // mapInputs second argument is an array to filter the to display inputs you want.
+  // mapInputs second argument is an array to filter the inputs you want to display.
 
   const displayInputs = mapInputs(formState, ['name', 'password'])(
     formOptions
