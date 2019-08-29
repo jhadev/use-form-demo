@@ -100,7 +100,7 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
   const formOptions = [
     {
       label: 'test',
-      placeholder: '',
+      placeholder: 'Do you even have a name?',
       type: 'text',
       className: 'form-control my-2'
     },
