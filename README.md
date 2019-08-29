@@ -50,6 +50,7 @@ Defaults to bootstrap form-control class names for inputs if no deps are specifi
     props.firebase.signInWithEmailAndPassword(email, password)
       .then(() => {
         setFormState({ email: '', password: '', success: true })
+        props.history.push('/home')
       }).catch(error => {
         setFormState({ error, success: false })
       })
