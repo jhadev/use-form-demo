@@ -6,6 +6,7 @@ const FormAllOptions = props => {
   const { formState, setFormState, onChange, mapInputs } = useForm({
     name: '',
     password: '',
+    age: '',
     success: false
   });
 
@@ -18,7 +19,8 @@ const FormAllOptions = props => {
       type: 'text',
       className: 'form-control my-2'
     },
-    { id: 'testing', className: ' form-control my-2' }
+    // if className is specified in the object in the first index in the array, it is assumed that all other inputs will get the same className as well. No need to rewrite it.
+    { id: 'testing' }
   ];
 
   // options are label, id, className, placeholder, type
