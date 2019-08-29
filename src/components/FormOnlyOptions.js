@@ -28,7 +28,7 @@ const FormOnlyOptions = props => {
   const postForm = () => {
     // simulate post to server or can update parent with prop function here.
     console.log(formState);
-    setFormState({ name: '', password: '' });
+    setFormState({ name: '', password: '', age: '' });
   };
 
   const isInvalid = formState.name === '' || formState.password === ''

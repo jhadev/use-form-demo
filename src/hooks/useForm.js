@@ -10,7 +10,7 @@ const genOnce = () => {
   if (!done) {
     done = true
     return Math.random()
-      .toString(10)
+      .toString(36)
       .substr(2, 8);
   }
 }

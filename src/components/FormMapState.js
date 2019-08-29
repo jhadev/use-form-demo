@@ -14,7 +14,7 @@ const FormMapState = props => {
   const postForm = () => {
     // simulate post to server or can update parent with prop function here.
     console.log(formState);
-    setFormState({ name: '', password: '', success: true });
+    setFormState({ name: '', password: '' });
   };
 
   const isInvalid = formState.name === '' || formState.password === ''
