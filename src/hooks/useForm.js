@@ -5,6 +5,22 @@ const reducer = (currentState, newState) => {
   return { ...currentState, ...newState };
 };
 
+
+const genId = () => {
+  let cache = {}
+  return (key, index) => {
+    console.log(cache)
+    if (!cache[key + index]) {
+      cache[key + index] = Math.random()
+        .toString(36)
+        .substr(2, 8) + index * 2
+    }
+    return cache
+  }
+}
+
+const createCache = genId()
+
 // call useForm with initialState object in any functional component
 const useForm = initialState => {
   // initialize useReducer and extract state object and setState function from it.
@@ -16,21 +32,6 @@ const useForm = initialState => {
     setFormState({ [name]: value });
   };
 
-  // ids always change for now.
-  const genId = () => {
-    const random = Math.random()
-      .toString(36)
-      .substr(2, 8);
-
-    return () => {
-      let done = false
-      if (!done) {
-        done = true
-        return random
-      }
-    }
-  }
-  // if no ids are added they will be auto genned based on name in state and a random string of numbers.
   // takes in the formState object as an arg in the functional component
   // create an array of arrays with key, value pairs.
   // return a closure that uses the state object to map inputs as JSX
@@ -67,17 +68,17 @@ const useForm = initialState => {
       }
 
       return stateToMap.map(([key, value], index) => {
-        const genned = genId()()
+        const genned = createCache(key, index)
         return (
           <React.Fragment key={index}>
             {args[index].label && (
-              <label htmlFor={args[index].id || `${key}-${genned}${index}`}>
+              <label htmlFor={args[index].id || `${genned[key + index]}`}>
                 {args[index].label}
               </label>
             )}
             <input
               className={args[index].className || `form-control mb-3`}
-              id={args[index].id || `${key}-${genned}${index}`}
+              id={args[index].id || `${genned[key + index]}`}
               type={args[index].type || key}
               placeholder={
                 args[index].placeholder ||
