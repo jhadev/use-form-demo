@@ -5,6 +5,20 @@ const reducer = (currentState, newState) => {
   return { ...currentState, ...newState };
 };
 
+const types = [
+  'date',
+  'datetime-local',
+  'email',
+  'number',
+  'password',
+  'range',
+  'search',
+  'tel',
+  'time',
+  'url',
+  'week',
+  'month'
+]
 
 const genId = () => {
   let cache = {}
@@ -68,21 +82,19 @@ const useForm = (initialState, formName) => {
 
       return stateToMap.map(([key, value], index) => {
         const genned = createCache(formName, key, index)
+        const { label, id, className, placeholder, type } = args[index]
         return (
           <React.Fragment key={index}>
-            {args[index].label && (
-              <label htmlFor={args[index].id || `${genned[formName + key + index]}`}>
-                {args[index].label}
+            {label && (
+              <label htmlFor={id || `${genned[formName + key + index]}`}>
+                {label}
               </label>
             )}
             <input
-              className={args[index].className || `form-control mb-3`}
-              id={args[index].id || `${genned[formName + key + index]}`}
-              type={args[index].type || key}
-              placeholder={
-                args[index].placeholder ||
-                `${key.charAt(0).toUpperCase() + key.slice(1)}`
-              }
+              className={className || `form-control mb-3`}
+              id={id || `${genned[formName + key + index]}`}
+              type={type ? type : types.includes(key) ? key : 'text'}
+              placeholder={placeholder || `${key.charAt(0).toUpperCase() + key.slice(1)}`}
               name={key}
               value={value}
               onChange={onChange}
