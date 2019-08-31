@@ -7,7 +7,7 @@ const FormOnlyOptions = props => {
     name: '',
     password: '',
     age: '',
-  });
+  }, 'example-form-options');
 
   // options are label, id, className, placeholder, type
   const formOptions = [

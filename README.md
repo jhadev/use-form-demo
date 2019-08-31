@@ -14,9 +14,13 @@ import { useForm } from '../hooks/useForm';
 
 const SomeForm = props => {
 
+  // initial state is first argument to useForm, name of Form is second argument.
+
   const { formState, setFormState, onChange, mapInputs } = useForm({
+
     // initialize state here
-  });
+
+  }, 'some-form');
 
   ...
 }
@@ -26,9 +30,12 @@ export default SomeForm
 
 Input changes are handled automatically.
 
-Defaults to bootstrap form-control class names for inputs if no deps are specified. If no ids are specified it will auto gen and append a random string of characters to the key name in state and apply it as the input field id and label htmlFor (if specified) to avoid duplicate ids. Labels are not shown by default. Simple validation can be handled by disabling a button for now.
+Defaults to bootstrap form-control class names for inputs if no deps are specified. If no ids are specified it will create ids based on the form name and the key in state.
 
-- _ex:_ **id="name-gnb1ee5r0"**
+If useForm is used in multiple components, the form name must be unique to that component.
+This ensures ids will not be duplicated, but will still be styleable because they won't be randomly generated.
+
+- _ex:_ if a key in state is called 'age' and form is named 'form-one' then- **id="form-one-age"**
 
 - **setFormState behaves just like this.setState**
 
@@ -40,7 +47,7 @@ Defaults to bootstrap form-control class names for inputs if no deps are specifi
     password: '',
     success: false,
     error: null
-  });
+  }, 'sign-in-form');
 
   ...
 
@@ -67,7 +74,7 @@ Defaults to bootstrap form-control class names for inputs if no deps are specifi
   const { formState, setFormState, onChange, mapInputs } = useForm({
     name: '',
     password: ''
-  });
+  }, 'example-state-form');
 
   const displayInputs = mapInputs(formState)()
 
@@ -87,7 +94,7 @@ Defaults to bootstrap form-control class names for inputs if no deps are specifi
     password: '',
     success: false,
     error: null
-  });
+  }, 'example-filter-form');
 
   // second optional argument of mapInputs is an array of certain state values as strings to create into inputs
 
@@ -108,7 +115,7 @@ Defaults to bootstrap form-control class names for inputs if no deps are specifi
     name: '',
     password: '',
     age: '',
-  });
+  }, 'example-options-form');
 
   // if an input does not need options, insert an empty object as the placeholder. The order matters.
   // options are label, id, className, placeholder, type
@@ -140,7 +147,7 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
     name: '',
     password: '',
     success: false
-  });
+  }, 'example-all-form');
 
   /*
     order matters
