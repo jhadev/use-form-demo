@@ -183,7 +183,7 @@ const types = [
 
 /*
   If the key in state matches one of these types it will be used as the type for the input field.
-  If it does not match and no type is specified fpr that input field,
+  If it does not match and no type is specified for that input field,
   the type will default to 'text'.
 */
 ```
