@@ -4,7 +4,7 @@ import React, { useReducer } from 'react';
 const reducer = (currentState, newState) => {
   return { ...currentState, ...newState };
 };
-
+// input type check
 const types = [
   'date',
   'datetime-local',
@@ -19,20 +19,17 @@ const types = [
   'week',
   'month'
 ]
-
+// used but unnecessary leaving for future use...
 const genId = () => {
   let cache = {}
   return (formName, key, index) => {
     if (!cache[`${formName}-${key}-${index}`]) {
       cache[`${formName}-${key}-${index}`] = `${formName}-${key}`
     }
-    console.log(cache)
     return cache
   }
 }
-
 const createCache = genId()
-
 // call useForm with initialState object in any functional component
 const useForm = (initialState, formName = 'default') => {
   // initialize useReducer and extract state object and setState function from it.
@@ -58,8 +55,8 @@ const useForm = (initialState, formName = 'default') => {
       stateToMap = Object.entries(filteredState)
     }
 
-    return options => {
-      if (options) {
+    return (options = []) => {
+      if (options.length) {
         // placeholder to do something else.
         options = [...options];
         // if there is a className defined in first dependency obj
@@ -74,7 +71,6 @@ const useForm = (initialState, formName = 'default') => {
           })
         }
       } else {
-        options = [];
         options.length = stateToMap.length;
         options = [...options].map(() => ({}));
       }
