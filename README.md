@@ -35,6 +35,9 @@ Defaults to bootstrap form-control class names for inputs if no options are spec
 If useForm is used in multiple components, the form name must be unique to that component.
 This ensures ids will not be duplicated, but will still be styleable because they won't be randomly generated.
 
+If no name is specified as the second argument the name of the form will be set as 'default'.
+This means if another form is not named, there will be duplicate ids. It is just a fallback.
+
 - _ex:_ If a key in state is named **age** and the form is named **form-one** then **id="form-one-age"**
 
 - **setFormState behaves just like this.setState**
