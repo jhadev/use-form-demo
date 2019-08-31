@@ -13,9 +13,13 @@ import React from 'react';
 import { useForm } from '../hooks/useForm';
 
 const SomeForm = props => {
+
   // initial state is first argument to useForm, name of Form is second argument.
+
   const { formState, setFormState, onChange, mapInputs } = useForm({
+
     // initialize state here
+
   }, 'some-form');
 
   ...
