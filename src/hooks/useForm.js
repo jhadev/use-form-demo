@@ -4,7 +4,7 @@ import React, { useReducer } from 'react';
 const reducer = (currentState, newState) => {
   return { ...currentState, ...newState };
 };
-
+// input type check
 const types = [
   'date',
   'datetime-local',
@@ -19,23 +19,19 @@ const types = [
   'week',
   'month'
 ]
-
+// used but unnecessary leaving for future use...
 const genId = () => {
   let cache = {}
   return (formName, key, index) => {
-    // maybe set default here??
-    // what a hodgepodge
-    if (!cache[formName + key + index]) {
-      cache[formName + key + index] = `${formName}-${key}`
+    if (!cache[`${formName}-${key}-${index}`]) {
+      cache[`${formName}-${key}-${index}`] = `${formName}-${key}`
     }
     return cache
   }
 }
-
 const createCache = genId()
-
 // call useForm with initialState object in any functional component
-const useForm = (initialState, formName) => {
+const useForm = (initialState, formName = 'default') => {
   // initialize useReducer and extract state object and setState function from it.
   const [formState, setFormState] = useReducer(reducer, initialState);
 
@@ -59,15 +55,15 @@ const useForm = (initialState, formName) => {
       stateToMap = Object.entries(filteredState)
     }
 
-    return args => {
-      if (args) {
+    return (options = []) => {
+      if (options.length) {
         // placeholder to do something else.
-        args = [...args];
+        options = [...options];
         // if there is a className defined in first dependency obj
         // use it for every dep that doesn't have a className.
-        const [{ className }] = args
+        const [{ className }] = options
         if (className) {
-          args = args.map(dependency => {
+          options = options.map(dependency => {
             if (!dependency.className) {
               return { ...dependency, className: className }
             }
@@ -75,24 +71,23 @@ const useForm = (initialState, formName) => {
           })
         }
       } else {
-        args = [];
-        args.length = stateToMap.length;
-        args = [...args].map(() => ({}));
+        options.length = stateToMap.length;
+        options = [...options].map(() => ({}));
       }
 
       return stateToMap.map(([key, value], index) => {
         const genned = createCache(formName, key, index)
-        const { label, id, className, placeholder, type } = args[index]
+        const { label, id, className, placeholder, type } = options[index]
         return (
           <React.Fragment key={index}>
             {label && (
-              <label htmlFor={id || `${genned[formName + key + index]}`}>
+              <label htmlFor={id || `${genned[`${formName}-${key}-${index}`]}`}>
                 {label}
               </label>
             )}
             <input
               className={className || `form-control mb-3`}
-              id={id || `${genned[formName + key + index]}`}
+              id={id || `${genned[`${formName}-${key}-${index}`]}`}
               type={type ? type : types.includes(key) ? key : 'text'}
               placeholder={placeholder || `${key.charAt(0).toUpperCase() + key.slice(1)}`}
               name={key}
