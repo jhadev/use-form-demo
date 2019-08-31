@@ -6,7 +6,7 @@ const FormMapState = props => {
   const { formState, setFormState, onChange, mapInputs } = useForm({
     name: '',
     password: ''
-  }, 'formMapState');
+  }, 'example-map-state');
 
   // options are label, id, className, placeholder, type
   const displayInputs = mapInputs(formState)()

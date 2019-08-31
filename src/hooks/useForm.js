@@ -9,10 +9,7 @@ const reducer = (currentState, newState) => {
 const genId = () => {
   let cache = {}
   return (formName, key, index) => {
-    if (!formName) {
-      formName = key + index
-    }
-    console.log(cache)
+    // maybe set default here??
     // what a hodgepodge
     if (!cache[formName + key + index]) {
       cache[formName + key + index] = `${formName}-${key}`
