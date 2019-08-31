@@ -8,7 +8,7 @@ const FormAllOptions = props => {
     password: '',
     age: '',
     success: false
-  });
+  }, 'formMapState');
 
   // define form options here -- need to either leave out dependency array or add empty objects to go in order
 

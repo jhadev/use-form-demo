@@ -8,12 +8,14 @@ const reducer = (currentState, newState) => {
 
 const genId = () => {
   let cache = {}
-  return (key, index) => {
+  return (formName, key, index) => {
+    if (!formName) {
+      formName = key + index
+    }
     console.log(cache)
-    if (!cache[key + index]) {
-      cache[key + index] = Math.random()
-        .toString(36)
-        .substr(2, 8) + index * 2
+    // what a hodgepodge
+    if (!cache[formName + key + index]) {
+      cache[formName + key + index] = `${formName}-${key}`
     }
     return cache
   }
@@ -22,7 +24,7 @@ const genId = () => {
 const createCache = genId()
 
 // call useForm with initialState object in any functional component
-const useForm = initialState => {
+const useForm = (initialState, formName) => {
   // initialize useReducer and extract state object and setState function from it.
   const [formState, setFormState] = useReducer(reducer, initialState);
 
@@ -68,17 +70,17 @@ const useForm = initialState => {
       }
 
       return stateToMap.map(([key, value], index) => {
-        const genned = createCache(key, index)
+        const genned = createCache(formName, key, index)
         return (
           <React.Fragment key={index}>
             {args[index].label && (
-              <label htmlFor={args[index].id || `${genned[key + index]}`}>
+              <label htmlFor={args[index].id || `${genned[formName + key + index]}`}>
                 {args[index].label}
               </label>
             )}
             <input
               className={args[index].className || `form-control mb-3`}
-              id={args[index].id || `${genned[key + index]}`}
+              id={args[index].id || `${genned[formName + key + index]}`}
               type={args[index].type || key}
               placeholder={
                 args[index].placeholder ||
