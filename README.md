@@ -14,7 +14,7 @@ import { useForm } from '../hooks/useForm';
 
 const SomeForm = props => {
 
-  // initial state is first argument to useForm, name of Form is second argument.
+  // initial state is first argument to useForm, name of form is second argument.
 
   const { formState, setFormState, onChange, mapInputs } = useForm({
 
@@ -30,12 +30,12 @@ export default SomeForm
 
 Input changes are handled automatically.
 
-Defaults to bootstrap form-control class names for inputs if no deps are specified. If no ids are specified it will create ids based on the form name and the key in state.
+Defaults to bootstrap form-control class names for inputs if no options are specified. If no ids are specified it will create ids based on the form name and the key in state.
 
 If useForm is used in multiple components, the form name must be unique to that component.
 This ensures ids will not be duplicated, but will still be styleable because they won't be randomly generated.
 
-- _ex:_ if a key in state is called 'age' and form is named 'form-one' then- **id="form-one-age"**
+- _ex:_ If a key in state is named **age** and the form is named **form-one** then **id="form-one-age"**
 
 - **setFormState behaves just like this.setState**
 
@@ -70,6 +70,8 @@ This ensures ids will not be duplicated, but will still be styleable because the
 
 - _onChange is optional because it is already handled, but it is still available if needed._
 
+**Example all of state no options**
+
 ```
   const { formState, setFormState, onChange, mapInputs } = useForm({
     name: '',
@@ -86,7 +88,30 @@ This ensures ids will not be duplicated, but will still be styleable because the
   )
 ```
 
+**HTML Output**
+
+```
+<div class="form-group">
+  <input
+    class="form-control mb-3"
+    id="example-state-form-name"
+    type="text"
+    placeholder="Name"
+    name="name"
+    value=""/>
+  <input
+    class="form-control mb-3"
+    id="example-state-form-password"
+    type="password"
+    placeholder="Password"
+    name="password"
+    value=""/>
+</div>
+```
+
 ### **Map some of state into inputs**
+
+**Filter state example**
 
 ```
   const { formState, setFormState, onChange, mapInputs } = useForm({
@@ -108,7 +133,62 @@ This ensures ids will not be duplicated, but will still be styleable because the
   )
 ```
 
+**HTML Output**
+
+```
+<div class="form-group">
+  <input
+    class="form-control mb-3"
+    id="example-only-filter-name"
+    type="text"
+    placeholder="Name"
+    name="name"
+    value=""/>
+  <input
+    class="form-control mb-3"
+    id="example-only-filter-password"
+    type="password"
+    placeholder="Password"
+    name="password"
+    value=""/>
+</div>
+```
+
 ### **Map all of state into inputs with options**
+
+Options are: **label, id, className, placeholder, type**
+
+There is no need to define classNames for every options object if they are all the same.
+If a className property exists for the first options object, it will be automatically added to the rest of the inputs.
+If classNames exist for any of the following option objects, they will not be replaced.
+
+Labels are off by default.
+If a label is specified for an input field, but no id is provided, an id will be created to match the label's htmlFor property.
+
+```
+const types = [
+  'date',
+  'datetime-local',
+  'email',
+  'number',
+  'password',
+  'range',
+  'search',
+  'tel',
+  'time',
+  'url',
+  'week',
+  'month'
+]
+
+/*
+  If the key in state matches one of these types it will be used as the type for the input field.
+  If it does not match and no type is specified that specific input field,
+  the type will default to 'text'.
+*/
+```
+
+**Example with options**
 
 ```
   const { formState, setFormState, onChange, mapInputs } = useForm({
@@ -117,8 +197,7 @@ This ensures ids will not be duplicated, but will still be styleable because the
     age: '',
   }, 'example-options-form');
 
-  // if an input does not need options, insert an empty object as the placeholder. The order matters.
-  // options are label, id, className, placeholder, type
+  // If an input does not need options, insert an empty object as the placeholder. The order matters.
 
   const formOptions = [
     {
@@ -140,7 +219,39 @@ This ensures ids will not be duplicated, but will still be styleable because the
   )
 ```
 
+**HTML output**
+
+```
+<div class="form-group">
+  <label for="name-field">Enter your name.</label>
+  <input
+    class="form-control mb-3"
+    id="name-field"
+    type="text"
+    placeholder="Your Name Here"
+    name="name"
+    value=""/>
+  <input
+    class="form-control mb-3"
+    id="example-options-form-password"
+    type="password"
+    placeholder="Password"
+    name="password"
+    value=""/>
+  <label for="example-options-form-age">How old are you?</label>
+  <input
+    class="form-control mb-3"
+    id="example-options-form-age"
+    type="number"
+    placeholder="Age"
+    name="age"
+    value=""/>
+</div>
+```
+
 ### **Map and filter state into inputs with options**
+
+**Filter and options example**
 
 ```
 const { formState, setFormState, onChange, mapInputs } = useForm({
@@ -150,11 +261,11 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
   }, 'example-all-form');
 
   /*
-    order matters
-    options are label, id, className, placeholder, type
-    if className property exists for the first item,
+    Order matters.
+    Options are label, id, className, placeholder, type.
+    If className property exists for the first item,
     it will be automatically added to the rest of the inputs.
-    if classNames exist for any of the following objects,
+    If classNames exist for any of the following objects,
     they will not be replaced.
   */
 
@@ -168,7 +279,7 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
     { id: 'password-field' }
   ];
 
-  // mapInputs second argument is an array to filter the inputs you want to display.
+  // mapInputs second argument is an array to filter the inputs that need to be created.
 
   const displayInputs = mapInputs(formState, ['name', 'password'])(formOptions);
 
@@ -179,3 +290,27 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
     ...
   )
 ```
+
+**HTML Output**
+
+```
+<div class="form-group">
+  <label for="example-all-form-name">Enter your name.</label>
+  <input
+    class="form-control my-2"
+    id="example-all-form-name"
+    type="text"
+    placeholder="Do you even have a name?"
+    name="name"
+    value=""/>
+  <input
+    class="form-control my-2"
+    id="password-field"
+    type="password"
+    placeholder="Password"
+    name="password"
+    value=""/>
+</div>
+```
+
+❤ if you read this far.

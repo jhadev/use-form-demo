@@ -14,20 +14,17 @@ const FormAllOptions = props => {
 
   const formOptions = [
     {
-      label: 'test',
-      placeholder: '',
+      label: 'Enter your name.',
+      placeholder: 'Do you even have a name?',
       type: 'text',
       className: 'form-control my-2'
     },
-    // if className is specified in the object in the first index in the array, it is assumed that all other inputs will get the same className as well. No need to rewrite it.
-    { id: 'testing' }
+    { id: 'password-field' }
   ];
 
   // options are label, id, className, placeholder, type
   // mapInputs second argument is a filter to display inputs
-  const displayInputs = mapInputs(formState, ['name', 'password'])(
-    formOptions
-  );
+  const displayInputs = mapInputs(formState, ['name', 'password'])(formOptions);
 
   /*
   if no options
