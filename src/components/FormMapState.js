@@ -5,12 +5,7 @@ const FormMapState = props => {
   // extract and initialize useForm hook. don't need on change here, but might be useful at some point.
   const { formState, setFormState, onChange, mapInputs } = useForm({
     name: '',
-    password: '',
-    date: '',
-    email: '',
-    month: '',
-    time: '',
-    tel: ''
+    password: ''
   }, 'example-map-state');
 
   // options are label, id, className, placeholder, type
