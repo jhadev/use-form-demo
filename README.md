@@ -183,7 +183,8 @@ const types = [
 
 /*
   If the key in state matches one of these types it will be used as the type for the input field.
-  If it does not match and no option is passed for type in an options object for that specific input field, the type will default to 'text'.
+  If it does not match and no type is specified that specific input field,
+  the type will default to 'text'.
 */
 ```
 
@@ -261,7 +262,7 @@ const { formState, setFormState, onChange, mapInputs } = useForm({
 
   /*
     Order matters.
-    Options are label, id, className, placeholder, type
+    Options are label, id, className, placeholder, type.
     If className property exists for the first item,
     it will be automatically added to the rest of the inputs.
     If classNames exist for any of the following objects,
