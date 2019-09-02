@@ -6,7 +6,6 @@ const FormWithSubmit = props => {
   const { formState, setFormState, onChange, mapInputs } = useForm(
     {
       name: '',
-      date: '',
       comment: ''
     },
     'example-with-submit'
@@ -28,22 +27,18 @@ const FormWithSubmit = props => {
     // simulate post to server or can update parent with prop function here.
     event.preventDefault();
     console.log(formState);
-    setFormState({ name: '', date: '', comment: '', success: true });
+    setFormState({ name: '', comment: '' });
   };
   // options are label, id, className, placeholder, type
   // mapInputs second argument is a filter to display inputs
 
-  const isInvalid =
-    formState.name === '' || formState.age === '' || formState.comment === '';
+  const isInvalid = formState.name === '' || formState.comment === '';
 
-  const displayInputs = mapInputs(formState, ['name', 'comment'])(formOptions)(
-    postForm,
-    isInvalid
-  );
+  const displayInputs = mapInputs(formState)(formOptions)(postForm, isInvalid);
 
   return (
     <div className="mt-3">
-      <h1>Form All Options</h1>
+      <h1>Form With Submit</h1>
       <div>{displayInputs}</div>
     </div>
   );

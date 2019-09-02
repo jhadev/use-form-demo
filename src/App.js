@@ -11,7 +11,7 @@ import FormWithSubmit from './components/FormWithSubmit';
 const App = () => {
   return (
     <Container className="text-center mt-5">
-      <Row>
+      {/* <Row>
         <Column md={6}>
           <FormMapState />
         </Column>
@@ -26,7 +26,7 @@ const App = () => {
         <Column md={6}>
           <FormAllOptions />
         </Column>
-      </Row>
+      </Row> */}
       <Row helper={'justify-content-center'}>
         <Column md={6}>
           <FormWithSubmit />
