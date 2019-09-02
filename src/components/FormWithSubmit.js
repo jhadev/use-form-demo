@@ -18,7 +18,7 @@ const FormWithSubmit = props => {
       type: 'text',
       className: 'form-control my-2'
     },
-    { label: 'Enter Your comment.' }
+    { label: 'Enter Your comment.', textarea: { rows: 4 } }
   ];
 
   const postForm = event => {
@@ -29,7 +29,7 @@ const FormWithSubmit = props => {
 
   const isInvalid = formState.name === '' || formState.comment === '';
 
-  const displayForm = mapForm(formState)(formOptions)(postForm);
+  const displayForm = mapForm(formState)(formOptions)(postForm, isInvalid);
 
   return (
     <div className="mt-3">

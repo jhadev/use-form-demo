@@ -80,7 +80,9 @@ const useForm = (initialState, formName = 'default') => {
 
       return stateToMap.map(([key, value], index) => {
         const genned = createCache(formName, key, index);
-        const { label, id, className, placeholder, type } = options[index];
+        const { label, id, className, placeholder, type, textarea } = options[
+          index
+        ];
 
         return (
           <React.Fragment key={index}>
@@ -89,17 +91,32 @@ const useForm = (initialState, formName = 'default') => {
                 {label}
               </label>
             )}
-            <input
-              className={className || `form-control mb-3`}
-              id={id || `${genned[`${formName}-${key}-${index}`]}`}
-              type={type ? type : types.includes(key) ? key : 'text'}
-              placeholder={
-                placeholder || `${key.charAt(0).toUpperCase() + key.slice(1)}`
-              }
-              name={key}
-              value={value}
-              onChange={onChange}
-            />
+            {textarea ? (
+              <textarea
+                className={className || `form-control mb-3`}
+                id={id || `${genned[`${formName}-${key}-${index}`]}`}
+                rows={textarea.rows || 3}
+                placeholder={
+                  placeholder || `${key.charAt(0).toUpperCase() + key.slice(1)}`
+                }
+                maxLength={textarea.maxLength || null}
+                name={key}
+                value={value}
+                onChange={onChange}
+              />
+            ) : (
+              <input
+                className={className || `form-control mb-3`}
+                id={id || `${genned[`${formName}-${key}-${index}`]}`}
+                type={type ? type : types.includes(key) ? key : 'text'}
+                placeholder={
+                  placeholder || `${key.charAt(0).toUpperCase() + key.slice(1)}`
+                }
+                name={key}
+                value={value}
+                onChange={onChange}
+              />
+            )}
           </React.Fragment>
         );
       });
@@ -117,9 +134,14 @@ const useForm = (initialState, formName = 'default') => {
           <form onSubmit={onSubmit}>
             {stateToMap.map(([key, value], index) => {
               const genned = createCache(formName, key, index);
-              const { label, id, className, placeholder, type } = options[
-                index
-              ];
+              const {
+                label,
+                id,
+                className,
+                placeholder,
+                type,
+                textarea
+              } = options[index];
 
               return (
                 <React.Fragment key={index}>
@@ -131,18 +153,34 @@ const useForm = (initialState, formName = 'default') => {
                       {label}
                     </label>
                   )}
-                  <input
-                    className={className || `form-control mb-3`}
-                    id={id || `${genned[`${formName}-${key}-${index}`]}`}
-                    type={type ? type : types.includes(key) ? key : 'text'}
-                    placeholder={
-                      placeholder ||
-                      `${key.charAt(0).toUpperCase() + key.slice(1)}`
-                    }
-                    name={key}
-                    value={value}
-                    onChange={onChange}
-                  />
+                  {textarea ? (
+                    <textarea
+                      className={className || `form-control mb-3`}
+                      id={id || `${genned[`${formName}-${key}-${index}`]}`}
+                      rows={textarea.rows || 3}
+                      placeholder={
+                        placeholder ||
+                        `${key.charAt(0).toUpperCase() + key.slice(1)}`
+                      }
+                      maxLength={textarea.maxLength || null}
+                      name={key}
+                      value={value}
+                      onChange={onChange}
+                    />
+                  ) : (
+                    <input
+                      className={className || `form-control mb-3`}
+                      id={id || `${genned[`${formName}-${key}-${index}`]}`}
+                      type={type ? type : types.includes(key) ? key : 'text'}
+                      placeholder={
+                        placeholder ||
+                        `${key.charAt(0).toUpperCase() + key.slice(1)}`
+                      }
+                      name={key}
+                      value={value}
+                      onChange={onChange}
+                    />
+                  )}
                 </React.Fragment>
               );
             })}

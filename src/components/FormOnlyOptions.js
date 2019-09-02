@@ -7,7 +7,8 @@ const FormOnlyOptions = props => {
     {
       name: '',
       password: '',
-      age: ''
+      age: '',
+      comment: ''
     },
     'example-form-options'
   );
@@ -21,7 +22,8 @@ const FormOnlyOptions = props => {
       id: 'name-field'
     },
     {},
-    { label: 'How old are you?', type: 'number' }
+    { label: 'How old are you?', type: 'number' },
+    { textarea: { rows: 4 }, label: 'Enter a comment.' }
   ];
 
   const displayInputs = mapInputs(formState)(formOptions);
@@ -29,7 +31,7 @@ const FormOnlyOptions = props => {
   const postForm = () => {
     // simulate post to server or can update parent with prop function here.
     console.log(formState);
-    setFormState({ name: '', password: '', age: '' });
+    setFormState({ name: '', password: '', age: '', comment: '' });
   };
 
   const isInvalid = formState.name === '' || formState.password === '';
