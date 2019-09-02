@@ -3,12 +3,15 @@ import { useForm } from '../hooks/useForm';
 
 const FormAllOptions = props => {
   // extract and initialize useForm hook. don't need on change here, but might be useful at some point.
-  const { formState, setFormState, onChange, mapInputs } = useForm({
-    name: '',
-    password: '',
-    age: '',
-    success: false
-  }, 'example-all-options');
+  const { formState, setFormState, onChange, mapInputs } = useForm(
+    {
+      name: '',
+      password: '',
+      age: '',
+      success: false
+    },
+    'example-all-options'
+  );
 
   // define form options here -- need to either leave out dependency array or add empty objects to go in order
 
@@ -24,7 +27,9 @@ const FormAllOptions = props => {
 
   // options are label, id, className, placeholder, type
   // mapInputs second argument is a filter to display inputs
-  const displayInputs = mapInputs(formState, ['name', 'password'])(formOptions);
+  const displayInputs = mapInputs(formState, ['name', 'password'])(
+    formOptions
+  )();
 
   /*
   if no options
@@ -43,13 +48,16 @@ const FormAllOptions = props => {
     setFormState({ name: '', password: '', success: true });
   };
 
-  const isInvalid = formState.name === '' || formState.password === ''
+  const isInvalid = formState.name === '' || formState.password === '';
 
   return (
-    <div className='mt-3'>
+    <div className="mt-3">
       <h1>Form All Options</h1>
       <div className="form-group">{displayInputs}</div>
-      <button disabled={isInvalid} className="btn btn-primary" onClick={postForm}>
+      <button
+        disabled={isInvalid}
+        className="btn btn-primary"
+        onClick={postForm}>
         Send
       </button>
     </div>

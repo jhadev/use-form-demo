@@ -1,15 +1,16 @@
 import React from 'react';
-import Container from './components/Container'
-import Row from './components/Row'
-import Column from './components/Column'
-import FormMapState from './components/FormMapState'
-import FormOnlyFilter from './components/FormOnlyFilter'
-import FormOnlyOptions from './components/FormOnlyOptions'
-import FormAllOptions from './components/FormAllOptions'
+import Container from './components/Container';
+import Row from './components/Row';
+import Column from './components/Column';
+import FormMapState from './components/FormMapState';
+import FormOnlyFilter from './components/FormOnlyFilter';
+import FormOnlyOptions from './components/FormOnlyOptions';
+import FormAllOptions from './components/FormAllOptions';
+import FormWithSubmit from './components/FormWithSubmit';
 
 const App = () => {
   return (
-    <Container className='text-center mt-5'>
+    <Container className="text-center mt-5">
       <Row>
         <Column md={6}>
           <FormMapState />
@@ -26,8 +27,13 @@ const App = () => {
           <FormAllOptions />
         </Column>
       </Row>
+      <Row helper={'justify-content-center'}>
+        <Column md={6}>
+          <FormWithSubmit />
+        </Column>
+      </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default App
+export default App;

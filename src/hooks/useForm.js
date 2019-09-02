@@ -18,18 +18,18 @@ const types = [
   'url',
   'week',
   'month'
-]
+];
 // used but unnecessary leaving for future use...
 const genId = () => {
-  let cache = {}
+  let cache = {};
   return (formName, key, index) => {
     if (!cache[`${formName}-${key}-${index}`]) {
-      cache[`${formName}-${key}-${index}`] = `${formName}-${key}`
+      cache[`${formName}-${key}-${index}`] = `${formName}-${key}`;
     }
-    return cache
-  }
-}
-const createCache = genId()
+    return cache;
+  };
+};
+const createCache = genId();
 // call useForm with initialState object in any functional component
 const useForm = (initialState, formName = 'default') => {
   // initialize useReducer and extract state object and setState function from it.
@@ -46,13 +46,14 @@ const useForm = (initialState, formName = 'default') => {
   // return a closure that uses the state object to map inputs as JSX
 
   const mapInputs = (state, filter) => {
-
     let stateToMap = Object.entries(state);
     // if there is an array of filter deps get them ready to map
     if (filter) {
-      const filteredState = filter
-        .reduce((obj, key) => ({ ...obj, [key]: state[key] }), {});
-      stateToMap = Object.entries(filteredState)
+      const filteredState = filter.reduce(
+        (obj, key) => ({ ...obj, [key]: state[key] }),
+        {}
+      );
+      stateToMap = Object.entries(filteredState);
     }
 
     return (options = []) => {
@@ -61,42 +62,92 @@ const useForm = (initialState, formName = 'default') => {
         options = [...options];
         // if there is a className defined in first dependency obj
         // use it for every dep that doesn't have a className.
-        const [{ className }] = options
+        const [{ className }] = options;
         if (className) {
           options = options.map(dependency => {
             if (!dependency.className) {
-              return { ...dependency, className: className }
+              return { ...dependency, className: className };
             }
-            return dependency
-          })
+            return dependency;
+          });
         }
       } else {
         options.length = stateToMap.length;
         options = [...options].map(() => ({}));
       }
 
-      return stateToMap.map(([key, value], index) => {
-        const genned = createCache(formName, key, index)
-        const { label, id, className, placeholder, type } = options[index]
-        return (
-          <React.Fragment key={index}>
-            {label && (
-              <label htmlFor={id || `${genned[`${formName}-${key}-${index}`]}`}>
-                {label}
-              </label>
-            )}
-            <input
-              className={className || `form-control mb-3`}
-              id={id || `${genned[`${formName}-${key}-${index}`]}`}
-              type={type ? type : types.includes(key) ? key : 'text'}
-              placeholder={placeholder || `${key.charAt(0).toUpperCase() + key.slice(1)}`}
-              name={key}
-              value={value}
-              onChange={onChange}
-            />
-          </React.Fragment>
-        );
-      });
+      return (onSubmit, isInvalid) => {
+        if (onSubmit) {
+          return (
+            <form onSubmit={onSubmit}>
+              {stateToMap.map(([key, value], index) => {
+                const genned = createCache(formName, key, index);
+                const { label, id, className, placeholder, type } = options[
+                  index
+                ];
+                console.log(label);
+                return (
+                  <React.Fragment key={index}>
+                    {label && (
+                      <label
+                        htmlFor={
+                          id || `${genned[`${formName}-${key}-${index}`]}`
+                        }>
+                        {label}
+                      </label>
+                    )}
+                    <input
+                      className={className || `form-control mb-3`}
+                      id={id || `${genned[`${formName}-${key}-${index}`]}`}
+                      type={type ? type : types.includes(key) ? key : 'text'}
+                      placeholder={
+                        placeholder ||
+                        `${key.charAt(0).toUpperCase() + key.slice(1)}`
+                      }
+                      name={key}
+                      value={value}
+                      onChange={onChange}
+                    />
+                  </React.Fragment>
+                );
+              })}
+              <button
+                disabled={isInvalid ? isInvalid : null}
+                className="btn btn-primary"
+                type="submit">
+                Send
+              </button>
+            </form>
+          );
+        } else {
+          return stateToMap.map(([key, value], index) => {
+            const genned = createCache(formName, key, index);
+            const { label, id, className, placeholder, type } = options[index];
+            return (
+              <React.Fragment key={index}>
+                {label && (
+                  <label
+                    htmlFor={id || `${genned[`${formName}-${key}-${index}`]}`}>
+                    {label}
+                  </label>
+                )}
+                <input
+                  className={className || `form-control mb-3`}
+                  id={id || `${genned[`${formName}-${key}-${index}`]}`}
+                  type={type ? type : types.includes(key) ? key : 'text'}
+                  placeholder={
+                    placeholder ||
+                    `${key.charAt(0).toUpperCase() + key.slice(1)}`
+                  }
+                  name={key}
+                  value={value}
+                  onChange={onChange}
+                />
+              </React.Fragment>
+            );
+          });
+        }
+      };
     };
   };
 
