@@ -32,6 +32,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "@typescript-eslint/eslint-plugin": "1.x",
     "@typescript-eslint/parser": "1.x",
     "babel-eslint": "10.x",
@@ -44,6 +46,7 @@
     "eslint-plugin-react-hooks": "1.x",
     "jest": "^24.9.0",
     "jest-puppeteer": "^4.3.0",
-    "puppeteer": "^1.19.0"
+    "puppeteer": "^1.19.0",
+    "regenerator-runtime": "^0.13.3"
   }
 }

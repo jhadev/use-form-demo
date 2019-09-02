@@ -18,6 +18,7 @@ const FormOnlyFilter = props => {
 
   const postForm = () => {
     // simulate post to server or can update parent with prop function here.
+    console.log('testing');
     console.log(formState);
     setFormState({ name: '', password: '', success: true });
   };
@@ -29,6 +30,7 @@ const FormOnlyFilter = props => {
       <h1>Form Only Filter</h1>
       <div className="form-group">{displayInputs}</div>
       <button
+        id="send"
         disabled={isInvalid}
         className="btn btn-primary"
         onClick={postForm}>
