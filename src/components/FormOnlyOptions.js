@@ -24,7 +24,7 @@ const FormOnlyOptions = props => {
     { label: 'How old are you?', type: 'number' }
   ];
 
-  const displayInputs = mapInputs(formState)(formOptions)();
+  const displayInputs = mapInputs(formState)(formOptions);
 
   const postForm = () => {
     // simulate post to server or can update parent with prop function here.

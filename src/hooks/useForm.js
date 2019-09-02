@@ -76,82 +76,111 @@ const useForm = (initialState, formName = 'default') => {
         options = [...options].map(() => ({}));
       }
 
-      return (onSubmit, isInvalid) => {
-        if (onSubmit) {
-          return (
-            <form onSubmit={onSubmit}>
-              {stateToMap.map(([key, value], index) => {
-                const genned = createCache(formName, key, index);
-                const { label, id, className, placeholder, type } = options[
-                  index
-                ];
-                console.log(label);
-                return (
-                  <React.Fragment key={index}>
-                    {label && (
-                      <label
-                        htmlFor={
-                          id || `${genned[`${formName}-${key}-${index}`]}`
-                        }>
-                        {label}
-                      </label>
-                    )}
-                    <input
-                      className={className || `form-control mb-3`}
-                      id={id || `${genned[`${formName}-${key}-${index}`]}`}
-                      type={type ? type : types.includes(key) ? key : 'text'}
-                      placeholder={
-                        placeholder ||
-                        `${key.charAt(0).toUpperCase() + key.slice(1)}`
-                      }
-                      name={key}
-                      value={value}
-                      onChange={onChange}
-                    />
-                  </React.Fragment>
-                );
-              })}
-              <button
-                disabled={isInvalid ? isInvalid : null}
-                className="btn btn-primary"
-                type="submit">
-                Send
-              </button>
-            </form>
-          );
-        } else {
-          return stateToMap.map(([key, value], index) => {
-            const genned = createCache(formName, key, index);
-            const { label, id, className, placeholder, type } = options[index];
-            return (
-              <React.Fragment key={index}>
-                {label && (
-                  <label
-                    htmlFor={id || `${genned[`${formName}-${key}-${index}`]}`}>
-                    {label}
-                  </label>
-                )}
-                <input
-                  className={className || `form-control mb-3`}
-                  id={id || `${genned[`${formName}-${key}-${index}`]}`}
-                  type={type ? type : types.includes(key) ? key : 'text'}
-                  placeholder={
-                    placeholder ||
-                    `${key.charAt(0).toUpperCase() + key.slice(1)}`
-                  }
-                  name={key}
-                  value={value}
-                  onChange={onChange}
-                />
-              </React.Fragment>
-            );
+      return stateToMap.map(([key, value], index) => {
+        const genned = createCache(formName, key, index);
+        const { label, id, className, placeholder, type } = options[index];
+        return (
+          <React.Fragment key={index}>
+            {label && (
+              <label htmlFor={id || `${genned[`${formName}-${key}-${index}`]}`}>
+                {label}
+              </label>
+            )}
+            <input
+              className={className || `form-control mb-3`}
+              id={id || `${genned[`${formName}-${key}-${index}`]}`}
+              type={type ? type : types.includes(key) ? key : 'text'}
+              placeholder={
+                placeholder || `${key.charAt(0).toUpperCase() + key.slice(1)}`
+              }
+              name={key}
+              value={value}
+              onChange={onChange}
+            />
+          </React.Fragment>
+        );
+      });
+    };
+  };
+
+  const mapForm = (state, filter) => {
+    let stateToMap = Object.entries(state);
+    // if there is an array of filter deps get them ready to map
+    if (filter) {
+      const filteredState = filter.reduce(
+        (obj, key) => ({ ...obj, [key]: state[key] }),
+        {}
+      );
+      stateToMap = Object.entries(filteredState);
+    }
+
+    return (options = []) => {
+      if (options.length) {
+        // placeholder to do something else.
+        options = [...options];
+        // if there is a className defined in first dependency obj
+        // use it for every dep that doesn't have a className.
+        const [{ className }] = options;
+        if (className) {
+          options = options.map(dependency => {
+            if (!dependency.className) {
+              return { ...dependency, className: className };
+            }
+            return dependency;
           });
         }
+      } else {
+        options.length = stateToMap.length;
+        options = [...options].map(() => ({}));
+      }
+
+      return (onSubmit, isInvalid) => {
+        return (
+          <form onSubmit={onSubmit}>
+            {stateToMap.map(([key, value], index) => {
+              const genned = createCache(formName, key, index);
+              const { label, id, className, placeholder, type } = options[
+                index
+              ];
+              return (
+                <React.Fragment key={index}>
+                  {label && (
+                    <label
+                      htmlFor={
+                        id || `${genned[`${formName}-${key}-${index}`]}`
+                      }>
+                      {label}
+                    </label>
+                  )}
+                  <input
+                    className={className || `form-control mb-3`}
+                    id={id || `${genned[`${formName}-${key}-${index}`]}`}
+                    type={type ? type : types.includes(key) ? key : 'text'}
+                    placeholder={
+                      placeholder ||
+                      `${key.charAt(0).toUpperCase() + key.slice(1)}`
+                    }
+                    name={key}
+                    value={value}
+                    onChange={onChange}
+                  />
+                </React.Fragment>
+              );
+            })}
+            <button
+              disabled={isInvalid ? isInvalid : null}
+              id={`${formName}-button`}
+              className={`btn`}
+              type="submit">
+              Submit
+            </button>
+          </form>
+        );
       };
     };
   };
 
-  return { formState, setFormState, onChange, mapInputs };
+  return { formState, setFormState, onChange, mapInputs, mapForm };
 };
 
 export { useForm };

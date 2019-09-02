@@ -3,15 +3,13 @@ import { useForm } from '../hooks/useForm';
 
 const FormWithSubmit = props => {
   // extract and initialize useForm hook. don't need on change here, but might be useful at some point.
-  const { formState, setFormState, onChange, mapInputs } = useForm(
+  const { formState, setFormState, onChange, mapForm } = useForm(
     {
       name: '',
       comment: ''
     },
     'example-with-submit'
   );
-
-  // define form options here -- need to either leave out dependency array or add empty objects to go in order
 
   const formOptions = [
     {
@@ -20,26 +18,31 @@ const FormWithSubmit = props => {
       type: 'text',
       className: 'form-control my-2'
     },
-    { label: 'Enter Your Comment' }
+    { label: 'Enter Your comment.' }
   ];
 
   const postForm = event => {
-    // simulate post to server or can update parent with prop function here.
     event.preventDefault();
     console.log(formState);
     setFormState({ name: '', comment: '' });
   };
-  // options are label, id, className, placeholder, type
-  // mapInputs second argument is a filter to display inputs
 
   const isInvalid = formState.name === '' || formState.comment === '';
 
-  const displayInputs = mapInputs(formState)(formOptions)(postForm, isInvalid);
+  const displayForm = mapForm(formState)(formOptions)(postForm);
 
   return (
     <div className="mt-3">
       <h1>Form With Submit</h1>
-      <div>{displayInputs}</div>
+      {formState.comment.length < 20 && formState.comment !== '' && (
+        <div className="alert alert-danger">
+          Comment must be over 20 characters
+        </div>
+      )}
+      {formState.name.length < 5 && formState.name !== '' && (
+        <div className="alert alert-danger">Name must be over 5 characters</div>
+      )}
+      <div>{displayForm}</div>
     </div>
   );
 };

@@ -12,7 +12,7 @@ const FormMapState = props => {
   );
 
   // options are label, id, className, placeholder, type
-  const displayInputs = mapInputs(formState)()();
+  const displayInputs = mapInputs(formState)();
 
   const postForm = () => {
     // simulate post to server or can update parent with prop function here.
