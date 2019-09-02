@@ -3,12 +3,15 @@ import { useForm } from '../hooks/useForm';
 
 const FormOnlyFilter = props => {
   // extract and initialize useForm hook. don't need on change here, but might be useful at some point.
-  const { formState, setFormState, onChange, mapInputs } = useForm({
-    name: '',
-    password: '',
-    success: false,
-    error: null
-  }, 'example-only-filter');
+  const { formState, setFormState, onChange, mapInputs } = useForm(
+    {
+      name: '',
+      password: '',
+      success: false,
+      error: null
+    },
+    'example-only-filter'
+  );
 
   // mapInputs second argument is a filter to display inputs
   const displayInputs = mapInputs(formState, ['name', 'password'])();
@@ -19,14 +22,17 @@ const FormOnlyFilter = props => {
     setFormState({ name: '', password: '', success: true });
   };
 
-  const isInvalid = formState.name === '' || formState.password === ''
+  const isInvalid = formState.name === '' || formState.password === '';
 
   return (
-    <div className='mt-3'>
+    <div className="mt-3">
       <h1>Form Only Filter</h1>
       <div className="form-group">{displayInputs}</div>
-      <button disabled={isInvalid} className="btn btn-primary" onClick={postForm}>
-        Send
+      <button
+        disabled={isInvalid}
+        className="btn btn-primary"
+        onClick={postForm}>
+        Send Data
       </button>
     </div>
   );
